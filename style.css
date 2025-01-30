@@ -1,0 +1,336 @@
+/* ========== RESET / BASE ========== */
+* {
+  box-sizing: border-box;
+  margin: 0; 
+  padding: 0;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f5f5f7;
+  color: #333;
+  line-height: 1.5;
+}
+h1, h2, h3 {
+  font-weight: 500;
+}
+button {
+  font-family: inherit;
+}
+
+/* ========== CONTAINER ========== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* ========== HEADER ========== */
+header {
+  margin-bottom: 20px;
+}
+header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+.team-selection {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.team-selection label {
+  font-weight: 500;
+  margin-right: 4px;
+}
+.team-selection select {
+  padding: 5px 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+.team-selection button {
+  background-color: #0069d9;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.team-selection button:hover {
+  background-color: #0053aa;
+}
+
+/* ========== FILE UPLOAD & ADDITIONAL BUTTONS ========== */
+.upload-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.upload-buttons input[type="file"] {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px;
+}
+.upload-buttons button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.upload-buttons button:hover {
+  background-color: #208338;
+}
+.upload-buttons .toggle-layout-btn {
+  background-color: #17a2b8;
+}
+.upload-buttons .toggle-layout-btn:hover {
+  background-color: #117a8b;
+}
+
+/* ========== LEGEND ========== */
+.legend {
+  background-color: #fff;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* ========== TEAMS CONTAINER ========== */
+.teams-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.team {
+  flex: 1 1 300px;
+  min-width: 280px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  padding: 16px;
+}
+.team h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  color: #222;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+/* PLAYER ROWS */
+.player-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.goalies-row {
+  margin-bottom: 15px;
+}
+button.player-btn {
+  font-size: 0.95rem;
+  padding: 8px 12px;
+  margin-right: 3px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #ccc;
+  color: #333;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+button.player-btn:hover {
+  background-color: #bbb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+button.player-btn sup {
+  font-size: 0.8em;
+  vertical-align: super;
+}
+
+/* BEARBEITEN-MODUS */
+.edit-player-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.edit-player-list > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.player-disabled {
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+.hide-toggle-btn {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.hide-toggle-btn:hover {
+  background-color: #5a6268;
+}
+
+/* ========== OUTPUT (DETAILS) ========== */
+.output {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.output h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  color: #222;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+.stats-columns {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+  flex-wrap: wrap; /* so dass bei weniger Platz die Spalten umbrechen */
+}
+.stats-column-inner {
+  flex: 1 1 200px;
+}
+.stats-column-inner p {
+  margin: 3px 0;
+  line-height: 1.4;
+  font-size: 0.95rem;
+}
+
+/* ========== DRAG & DROP PANEL ========== */
+.stats-dnd-panel {
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  display: none;
+}
+.stats-dnd-panel h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.stats-dnd-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+}
+.stats-dnd-column {
+  flex: 1;
+  min-height: 220px;
+  border: 2px dashed #ced4da;
+  border-radius: 6px;
+  padding: 10px;
+  background-color: #fafafa;
+  transition: background-color 0.2s;
+  position: relative;
+}
+.stats-dnd-column h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+  font-weight: 500;
+}
+.stats-dnd-column.dragover {
+  background-color: #e3f2fd; /* Hellblau, wenn man drüberzieht */
+  border-color: #90caf9;
+}
+
+.stat-item {
+  margin: 4px;
+  padding: 8px;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: move;
+  font-size: 0.9rem;
+  transition: box-shadow 0.2s;
+}
+.stat-item:hover {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+
+/* Mehrspaltige Darstellung im Pool */
+#statPool {
+  column-count: 3;
+  column-gap: 10px;
+}
+
+.stats-dnd-panel button {
+  background-color: #343a40;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.stats-dnd-panel button:hover {
+  background-color: #23272b;
+}
+
+/* ========== HELP SECTION ========== */
+#helpSection {
+  display: none;
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+#helpSection h2 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 1.4rem;
+}
+
+/* ========== MEDIA QUERIES ========== */
+@media (max-width: 992px) {
+  .stats-dnd-container {
+    flex-direction: column;
+  }
+  .stats-dnd-column {
+    min-height: 150px;
+  }
+  .stats-dnd-panel button {
+    margin-top: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Für iPad und kleiner */
+  .team-selection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .legend, .upload-buttons {
+    font-size: 0.9rem;
+  }
+  .stats-columns {
+    flex-direction: column;
+  }
+}
