@@ -5,108 +5,141 @@
   <title>ICE TIGERS FANRADIO - STATS TOOL</title>
 
   <!-- Google Fonts (Roboto) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link 
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" 
     rel="stylesheet"
   >
 
-  <!-- Externe CSS -->
+  <!-- Binde jetzt deine eigene CSS-Datei ein -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="container">
 
-<div class="container">
+    <header>
+      <h1>ICE TIGERS FANRADIO - STATS TOOL</h1>
+      <div class="team-selection">
+        <div>
+          <label for="teamASelect">Home:</label>
+          <select id="teamASelect"></select>
+        </div>
+        <div>
+          <label for="teamBSelect">Away:</label>
+          <select id="teamBSelect"></select>
+        </div>
 
-  <header>
-    <h1>ICE TIGERS FANRADIO - STATS TOOL</h1>
-    <div class="team-selection">
-      <div>
-        <label for="teamASelect">Home:</label>
-        <select id="teamASelect"></select>
+        <button id="loadTeamsBtn">Teams laden</button>
+        <button id="editModeBtn">Eingesetzte Spieler</button>
+        <button id="helpBtn" style="background-color: #6c757d;">Hilfe</button>
       </div>
-      <div>
-        <label for="teamBSelect">Away:</label>
-        <select id="teamBSelect"></select>
-      </div>
+    </header>
 
-      <button id="loadTeamsBtn">Teams laden</button>
-      <button id="editModeBtn">Eingesetzte Spieler</button>
-      <button id="helpBtn" style="background-color: #6c757d;">Hilfe</button>
+    <!-- Hilfe-Bereich -->
+    <div id="helpSection">
+      <h2>Hilfe</h2>
+      <p>
+        Dieses Tool ermöglicht es dir, Teams anhand einer CSV-Datei zu laden und anzuzeigen.
+        Außerdem kannst du ein individuelles Stats-Layout per Drag & Drop festlegen.
+        Zusätzlich kannst du nun festlegen, ob die CSV-Datei lokal hochgeladen
+        oder über einen URL-Link geladen werden soll.
+      </p>
+      <ul>
+        <li><strong>Quelle für aktuelle CSV-Datei:</strong>
+          <ul>
+            <li>Lokale CSV: Datei auswählen und auf "CSV importieren" klicken.</li>
+            <li>CSV per URL: URL eintragen und auf "CSV von URL laden" klicken.</li>
+            <li>Zwischen beiden Varianten kannst du per Toggle wechseln.</li>
+          </ul>
+        </li>
+        <li><strong>Teams laden:</strong> Wähle oben die gewünschten Teams als Home/Away und klicke auf "Teams laden".</li>
+        <li><strong>Eingesetzte Spieler:</strong> Klicke auf "Eingesetzte Spieler", um Spieler (de)aktivieren zu können.</li>
+        <li><strong>CSV importieren / laden:</strong> Lade eine neue CSV-Datei hoch oder nutze die URL-Option, um die Daten auszutauschen.</li>
+        <li><strong>Stats Layout wählen:</strong> Öffne das Drag & Drop Panel und ziehe die gewünschten Stats in Spalte 1, 2 oder 3.
+          Standard-Stats sind bereits vorbelegt.</li>
+        <li><strong>Layout speichern:</strong> Wenn du das Layout angepasst hast, kannst du es mit einem Klick sofort speichern.</li>
+        <li><strong>Tabelle erstellen (PDF / Excel):</strong> Mit einem Klick auf "Stats-Tabelle" kannst du eine
+        tabellarische Übersicht für beide Teams generieren, jeweils nach Rückennummer sortiert.
+        Du kannst diese Tabelle als PDF drucken (pro Team eine Seite, Querformat)
+        und auch als Excel-Datei exportieren.</li>
+      </ul>
     </div>
-  </header>
 
-  <!-- Hilfe-Bereich -->
-  <div id="helpSection">
-    <h2>Hilfe</h2>
-    <p>
-      Dieses Tool ermöglicht es dir, Teams anhand einer CSV-Datei zu laden und anzuzeigen.
-      Außerdem kannst du ein individuelles Stats-Layout per Drag & Drop festlegen.
-    </p>
-    <ul>
-      <li><strong>Quelle für aktuelle CSV-Datei:</strong> <a href="https://www.leaffan.net/del/data/%7B%7Bseason%7D%7D/del_player_game_stats_aggregated.csv">Download CSV-Datei von leaffan.net</a></li>
-      <li><strong>Teams laden:</strong> Wähle oben die gewünschten Teams als Home/Away und klicke auf "Teams laden".</li>
-      <li><strong>Eingesetzte Spieler:</strong> Klicke auf "Eingesetzte Spieler", um Spieler (de)aktivieren zu können.</li>
-      <li><strong>CSV importieren:</strong> Lade eine neue CSV-Datei hoch, um die Daten auszutauschen.</li>
-      <li><strong>Stats Layout wählen:</strong> Öffne das Drag & Drop Panel und ziehe die gewünschten Stats in Spalte 1, 2 oder 3.
-        Standard-Stats sind bereits vorbelegt.</li>
-      <li><strong>Layout speichern:</strong> Wenn du das Layout angepasst hast, kannst du es mit einem Klick sofort speichern.</li>
-    </ul>
-  </div>
+    <!-- CSV Quellen Toggle -->
+    <div class="csv-toggle">
+      <label><input type="radio" name="csvSource" id="localCsvRadio" checked> Lokale CSV-Datei</label>
+      <label><input type="radio" name="csvSource" id="urlCsvRadio"> CSV von URL</label>
+    </div>
 
-  <div class="upload-buttons">
-    <input type="file" id="csvUpload" accept=".csv" />
-    <button id="importCsvBtn">CSV importieren</button>
-
-    <button id="toggleDndPanelBtn" class="toggle-layout-btn">
-      Stats Layout wählen
-    </button>
-  </div>
-
-  <div class="legend">
-    <strong>Legende:</strong><br />
-    Top-Scorer = *<br />
-    Top-Torjäger = #<br />
-    Top-Vorlagengeber = +
-  </div>
-
-  <!-- Panel mit Drag&Drop -->
-  <div id="statsDndPanel" class="stats-dnd-panel">
-    <h3>Player-Stats-Styler</h3>
-    <button id="saveLayoutBtn" style="margin-bottom:10px;">Layout speichern</button>
-    <p>
-      Ziehe die gewünschten Stats aus dem "Pool" in eine der drei Spalten (1/2/3). <br/>
-      Dort kannst du auch die Reihenfolge verändern. <br/>
-      Ziehe ein Item zurück in den Pool, um es wieder zu entfernen.
-    </p>
-    <div class="stats-dnd-container">
-      <!-- Pool -->
-      <div id="statPool" class="stats-dnd-column">
-        <h3>Pool</h3>
+    <div class="upload-buttons">
+      <!-- Lokale CSV -->
+      <div id="localCsvSection">
+        <input type="file" id="csvUpload" accept=".csv" />
+        <button id="importCsvBtn">CSV importieren</button>
       </div>
-      <!-- Spalte 1 -->
-      <div id="column1" class="stats-dnd-column">
-        <h3>Spalte 1</h3>
+
+      <!-- URL CSV -->
+      <div id="urlCsvSection" style="display:none;">
+        <input type="text" id="csvUrlInput" placeholder="https://example.com/stats.csv" style="width: 250px;" />
+        <button id="loadFromUrlBtn">CSV von URL laden</button>
       </div>
-      <!-- Spalte 2 -->
-      <div id="column2" class="stats-dnd-column">
-        <h3>Spalte 2</h3>
-      </div>
-      <!-- Spalte 3 -->
-      <div id="column3" class="stats-dnd-column">
-        <h3>Spalte 3</h3>
+
+      <button id="toggleDndPanelBtn" class="toggle-layout-btn">
+        Stats Layout wählen
+      </button>
+
+      <!-- Button für Tabelle/Export -->
+      <button id="pdfExportBtn" style="background-color: #ffaf00;">PDF Export</button>
+      <button id="xlsExportBtn" style="background-color: #00af50;">XLS Export</button>
+    </div>
+
+    <div class="legend">
+      <strong>Legende:</strong><br />
+      Top-Scorer = *<br />
+      Top-Torjäger = #<br />
+      Top-Vorlagengeber = +
+    </div>
+
+    <!-- Panel mit Drag&Drop -->
+    <div id="statsDndPanel" class="stats-dnd-panel">
+      <h3>Player-Stats-Styler</h3>
+      <button id="saveLayoutBtn" style="margin-bottom:10px;">Layout speichern</button>
+      <p>
+        Ziehe die gewünschten Stats aus dem "Pool" in eine der drei Spalten (1/2/3). <br/>
+        Dort kannst du auch die Reihenfolge verändern. <br/>
+        Ziehe ein Item zurück in den Pool, um es wieder zu entfernen.
+      </p>
+      <div class="stats-dnd-container">
+        <!-- Pool -->
+        <div id="statPool" class="stats-dnd-column">
+          <h3>Pool</h3>
+        </div>
+        <!-- Spalte 1 -->
+        <div id="column1" class="stats-dnd-column">
+          <h3>Spalte 1</h3>
+        </div>
+        <!-- Spalte 2 -->
+        <div id="column2" class="stats-dnd-column">
+          <h3>Spalte 2</h3>
+        </div>
+        <!-- Spalte 3 -->
+        <div id="column3" class="stats-dnd-column">
+          <h3>Spalte 3</h3>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div id="teamsContainer" class="teams-container"></div>
+    <div id="teamsContainer" class="teams-container"></div>
 
-  <div id="output" class="output"></div>
+    <div id="output" class="output"></div>
 
-</div> <!-- /container -->
+    <!-- Tabellen-Ausgabe (versteckt) -->
+    <div id="exportTableContainer" style="display:none;"></div>
 
-<!-- Externe JS-Datei -->
-<script src="main.js"></script>
+  </div> <!-- /container -->
+
+  <!-- Binde deine JS-Datei am Ende ein -->
+  <script src="main.js"></script>
 </body>
 </html>

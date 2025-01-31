@@ -1,7 +1,7 @@
 /* ========== RESET / BASE ========== */
 * {
   box-sizing: border-box;
-  margin: 0; 
+  margin: 0;
   padding: 0;
 }
 body {
@@ -92,6 +92,10 @@ header h1 {
 }
 .upload-buttons .toggle-layout-btn:hover {
   background-color: #117a8b;
+}
+
+.csv-toggle {
+  margin-bottom: 8px;
 }
 
 /* ========== LEGEND ========== */
@@ -306,6 +310,21 @@ button.player-btn sup {
   margin-top: 0;
   margin-bottom: 8px;
   font-size: 1.4rem;
+}
+#helpSection ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+}
+
+/* Tabelle drucken: Querformat + Team-seite trennen */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 20mm;
+  }
+  .page-break {
+    page-break-after: always;
+  }
 }
 
 /* ========== MEDIA QUERIES ========== */
