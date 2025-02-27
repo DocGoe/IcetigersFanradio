@@ -152,7 +152,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     reader.readAsText(file);
   });
 
-  // URL-Import
+  /* URL-Import
   loadFromUrlBtn.addEventListener('click', async () => {
     const url = csvUrlInput.value.trim();
     if (!url) {
@@ -181,7 +181,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     } catch (err) {
       alert("Fehler beim Laden der CSV-Datei: " + err);
     }
-  });
+  });*/
 
   // Neue Buttons für PDF/XLS
   pdfExportBtn.addEventListener('click', () => {
