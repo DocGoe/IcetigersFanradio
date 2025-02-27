@@ -121,8 +121,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   });
 
   // CSV Toggle
-  localCsvRadio.addEventListener('change', toggleCsvSource);
-  urlCsvRadio.addEventListener('change', toggleCsvSource);
+  //localCsvRadio.addEventListener('change', toggleCsvSource);
+  //urlCsvRadio.addEventListener('change', toggleCsvSource);
 
   // File-Upload
   importCsvBtn.addEventListener('click', () => {
