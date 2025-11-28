@@ -2,8 +2,8 @@
  * main.js
  ******************************************************/
 
-// Fallback-CSV: wird geladen, wenn localStorage leer ist
-const DEFAULT_CSV_URL = "default.csv";
+// CSV-Quelle: immer die aktuellsten Daten von leaffan.net laden
+const DEFAULT_CSV_URL = "https://www.leaffan.net/del/data/2025/del_player_game_stats_aggregated.csv";
 
 /* Globale Variablen */
 let data = { teams: [] };
@@ -34,38 +34,26 @@ const saveLayoutBtn     = document.getElementById('saveLayoutBtn');
 const pdfExportBtn      = document.getElementById('pdfExportBtn');
 const xlsExportBtn      = document.getElementById('xlsExportBtn');
 
-// CSV-Quelle umschalten
-const localCsvRadio     = document.getElementById('localCsvRadio');
-const urlCsvRadio       = document.getElementById('urlCsvRadio');
-const localCsvSection   = document.getElementById('localCsvSection');
-const urlCsvSection     = document.getElementById('urlCsvSection');
-
-// File Upload
-const importCsvBtn = document.getElementById('importCsvBtn');
-const csvUpload    = document.getElementById('csvUpload');
-
-// URL Input
-const csvUrlInput   = document.getElementById('csvUrlInput');
-const loadFromUrlBtn= document.getElementById('loadFromUrlBtn');
-
 /*
   ----------------------------------------------------------------------------
     1) DOMContentLoaded
   ----------------------------------------------------------------------------
 */
 window.addEventListener('DOMContentLoaded', async () => {
-  // 1) CSV laden
-  const storedCsv = localStorage.getItem('myCsvData');
-  let csvToUse = storedCsv;
-
-  if (!csvToUse) {
-    try {
-      const resp = await fetch(DEFAULT_CSV_URL);
-      csvToUse = await resp.text();
-    } catch(e) {
-      console.error("Konnte default.csv nicht laden:", e);
-      csvToUse = "";
+  // 1) CSV laden (immer aus dem Web, Fallback: localStorage)
+  let csvToUse = "";
+  try {
+    const resp = await fetch(DEFAULT_CSV_URL);
+    if (!resp.ok) {
+      throw new Error(`HTTP ${resp.status}`);
     }
+    csvToUse = await resp.text();
+    // Damit bei Offline-Besuchen noch Daten vorhanden sind
+    localStorage.setItem('myCsvData', csvToUse);
+  } catch(e) {
+    console.error("Konnte aktuelle CSV nicht laden, versuche Fallback aus localStorage:", e);
+    const storedCsv = localStorage.getItem('myCsvData');
+    csvToUse = storedCsv || "";
   }
 
   // 2) Teams bauen
@@ -119,69 +107,6 @@ window.addEventListener('DOMContentLoaded', async () => {
       ? 'block'
       : 'none';
   });
-
-  // CSV Toggle
-  //localCsvRadio.addEventListener('change', toggleCsvSource);
-  //urlCsvRadio.addEventListener('change', toggleCsvSource);
-
-  // File-Upload
-  importCsvBtn.addEventListener('click', () => {
-    if (!csvUpload.files || csvUpload.files.length === 0) {
-      alert("Bitte zuerst eine CSV-Datei auswählen.");
-      return;
-    }
-    const file = csvUpload.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function(e) {
-      const newCsvData = e.target.result;
-      localStorage.setItem('myCsvData', newCsvData);
-
-      const rows = parseCSV_semicolon(newCsvData);
-      data.teams = buildTeamsFromCSV(rows);
-
-      if (rows.length > 0) {
-        allCsvHeaders = Object.keys(rows[0]);
-      }
-      initStatsLayout();
-      renderStatsDndUI();
-      populateTeamSelects();
-      loadSelectedTeams();
-      alert("CSV importiert und im Local Storage gespeichert!");
-    };
-    reader.readAsText(file);
-  });
-
-  /* URL-Import
-  loadFromUrlBtn.addEventListener('click', async () => {
-    const url = csvUrlInput.value.trim();
-    if (!url) {
-      alert("Bitte eine CSV-URL eingeben.");
-      return;
-    }
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Fehler beim Laden der CSV: ${response.status}`);
-      }
-      const textData = await response.text();
-      localStorage.setItem('myCsvData', textData);
-
-      const rows = parseCSV_semicolon(textData);
-      data.teams = buildTeamsFromCSV(rows);
-
-      if (rows.length > 0) {
-        allCsvHeaders = Object.keys(rows[0]);
-      }
-      initStatsLayout();
-      renderStatsDndUI();
-      populateTeamSelects();
-      loadSelectedTeams();
-      alert("CSV aus URL importiert und im Local Storage gespeichert!");
-    } catch (err) {
-      alert("Fehler beim Laden der CSV-Datei: " + err);
-    }
-  });*/
 
   // Neue Buttons für PDF/XLS
   pdfExportBtn.addEventListener('click', () => {
@@ -820,22 +745,7 @@ function exportToExcel(selectedTeams, columns) {
 
 /*
   ----------------------------------------------------------------------------
-    13) CSV Toggle
-  ----------------------------------------------------------------------------
-*/
-function toggleCsvSource() {
-  if (localCsvRadio.checked) {
-    localCsvSection.style.display = 'block';
-    urlCsvSection.style.display = 'none';
-  } else {
-    localCsvSection.style.display = 'none';
-    urlCsvSection.style.display = 'block';
-  }
-}
-
-/*
-  ----------------------------------------------------------------------------
-    14) CSV-Escaping
+    13) CSV-Escaping
   ----------------------------------------------------------------------------
 */
 function escapeCsvCell(str) {
